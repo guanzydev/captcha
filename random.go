@@ -7,8 +7,10 @@ package captcha
 import (
 	"crypto/hmac"
 	"crypto/rand"
+    mrand "math/rand"
 	"crypto/sha256"
 	"io"
+    "time"
 )
 
 // idLen is a length of captcha id string.
@@ -69,6 +71,20 @@ func randomBytes(length int) (b []byte) {
 	return
 }
 
+func Krand(size int, kind int) []byte {
+	ikind, kinds, result := kind, [][]int{[]int{10, 48}, []int{26, 97}, []int{26, 65}}, make([]byte, size)
+	is_all := kind > 2 || kind < 0
+	mrand.Seed(time.Now().UnixNano())
+	for i := 0; i < size; i++ {
+		if is_all { // random ikind
+			ikind = rand.Intn(3)
+		}
+		scope, base := kinds[ikind][0], kinds[ikind][1]
+		result[i] = uint8(base + rand.Intn(scope))
+	}
+	return result
+}
+
 // randomBytesMod returns a byte slice of the given length, where each byte is
 // a random number modulo mod.
 func randomBytesMod(length int, mod byte) (b []byte) {
@@ -82,13 +98,15 @@ func randomBytesMod(length int, mod byte) (b []byte) {
 	b = make([]byte, length)
 	i := 0
 	for {
-		r := randomBytes(length + (length / 4))
+		//r := randomBytes(length + (length / 4))
+        r : = string(Krand(length + (length / 4), 3))
 		for _, c := range r {
-			if c > maxrb {
+			/*if c > maxrb {
 				// Skip this number to avoid modulo bias.
 				continue
 			}
-			b[i] = c % mod
+			b[i] = c % mod*/
+            b[i] = c
 			i++
 			if i == length {
 				return
