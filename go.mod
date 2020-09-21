@@ -1,4 +1,4 @@
-module github.com/LyricTian/captcha
+module github.com/guanzydev/captcha
 
 go 1.13
 
