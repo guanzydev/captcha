@@ -12,7 +12,8 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/LyricTian/captcha"
+	//"github.com/LyricTian/captcha"
+    "github.com/guanzydev/captcha"
 )
 
 var formTemplate = template.Must(template.New("example").Parse(formTemplateSrc))

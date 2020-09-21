@@ -12,7 +12,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/LyricTian/captcha"
+	//"github.com/LyricTian/captcha"
+    "github.com/guanzydev/captcha"
 )
 
 var (
